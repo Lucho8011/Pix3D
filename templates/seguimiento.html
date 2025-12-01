@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seguimiento de Pedido | Pix3D</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-light bg-white border-bottom mb-5">
+        <div class="container justify-content-center">
+            <a class="navbar-brand fw-bold" href="/">
+                <img src="{% static 'images/logo.jpg' %}" height="30" class="me-2">
+                Pix3D Tracking
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                
+                <div class="card shadow-sm border-0 p-4">
+                    <div class="text-center mb-4">
+                        <h4 class="text-muted text-uppercase small ls-2">Estado del Pedido</h4>
+                        <h1 class="display-5 fw-bold text-primary">{{ pedido.get_estado_display }}</h1>
+                        <p class="text-muted">ID de Pedido: #{{ pedido.id }}</p>
+                    </div>
+
+                    <hr>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5 class="fw-bold">Detalles del Cliente</h5>
+                            <p class="mb-1"><strong>Nombre:</strong> {{ pedido.nombre_cliente }}</p>
+                            <p class="mb-1"><strong>Contacto:</strong> {{ pedido.contacto_cliente }}</p>
+                            <p><strong>Fecha Solicitud:</strong> {{ pedido.fecha_solicitud|date:"d M Y" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="fw-bold">Producto Solicitado</h5>
+                            <div class="d-flex align-items-center bg-light p-3 rounded">
+                                {% if pedido.producto_referencia.imagen_1 %}
+                                    <img src="{{ pedido.producto_referencia.imagen_1.url }}" width="60" height="60" class="rounded me-3" style="object-fit: cover;">
+                                {% endif %}
+                                <div>
+                                    <h6 class="mb-0 fw-bold">{{ pedido.producto_referencia.nombre }}</h6>
+                                    <span class="text-danger fw-bold">${{ pedido.producto_referencia.precio_base }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <a href="/" class="btn btn-outline-dark">Volver a la Tienda</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

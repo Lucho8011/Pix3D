@@ -64,7 +64,7 @@
                             <span class="precio">${{ p.precio_base }}</span>
                         </div>
                         
-                        <a href="#" class="btn btn-gamestop w-100 mt-3">Ver Detalle</a>
+                        <a href="{% url 'pedido' p.id %}" class="btn btn-gamestop w-100 mt-3">Solicitar Ahora</a>
                     </div>
                 </div>
 

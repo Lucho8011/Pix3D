@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>¡Pedido Recibido! | Pix3D</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-light bg-white border-bottom mb-5">
+        <div class="container justify-content-center">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'images/logo.png' %}" height="30" class="me-2">
+                Pix3D Store
+            </a>
+        </div>
+    </nav>
+
+    <div class="container text-center py-5">
+        <div class="card shadow-sm p-5 border-0 mx-auto" style="max-width: 600px; background-color: #ffffff;">
+            
+            <div class="mb-4 text-success" style="font-size: 4rem;">
+                ✓
+            </div>
+
+            <h1 class="display-5 fw-bold mb-3">¡Pedido Recibido!</h1>
+            <p class="lead text-muted">Gracias <strong>{{ pedido.nombre_cliente }}</strong>, hemos recibido tu solicitud correctamente.</p>
+            
+            <div class="alert alert-secondary mt-4 p-4 rounded-3">
+                <p class="mb-1 small text-uppercase fw-bold text-muted">Tu Código de Seguimiento</p>
+                <h2 class="fw-bold text-dark mb-0">{{ pedido.token_seguimiento }}</h2>
+            </div>
+            
+            <p class="small mt-3 text-muted">Guarda este código para consultar el estado de tu pedido.</p>
+            
+            <div class="d-grid gap-2 mt-5">
+                <a href="{% url 'seguimiento' pedido.token_seguimiento %}" class="btn btn-gamestop btn-lg">
+                    Ver Estado del Pedido
+                </a>
+                
+                <a href="/" class="btn btn-link text-muted mt-2">Volver a la Tienda</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

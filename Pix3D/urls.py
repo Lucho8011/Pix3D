@@ -7,6 +7,8 @@ from mainApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='home'),
+    path('pedido/<int:pk>/', views.realizar_pedido, name='pedido'),
+    path('seguimiento/<uuid:token>/', views.seguimiento, name='seguimiento'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
