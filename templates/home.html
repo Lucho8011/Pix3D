@@ -1,46 +1,83 @@
-{% load static %} <!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda - Pix3D</title>
+    <title>Tienda Pix3D</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <nav class="navbar navbar-expandlg navbar-dark bg-dark mb-5">
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class='navbar-brand' href="/">
-                <img src="{% static 'images/logo.png' %}" alt="Pix3D" height="30" class="d-inline-block align-text-top">
-                Pix3D Tienda
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'images/Logo.jpg' %}" alt="Pix3D" height="100" class="d-inline-block align-text-center me-2">
+                Pix3D
             </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Categorías</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
-            <div class="container">
-                <h1 class="text-center mb-4">Nuestros Productos</h1>
 
-                <div class="row">
-                    {% for p in products %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            {% if p.imagen_1 %}
-                            <img src="{{ p.imagen_1.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
-                            {% else %}
-                            <div class="bg-secundary text_white p-5 text-center">Sin fotos</div>
-                            {% endif %}
+    <div class="container-fluid bg-light py-5 mb-5 text-center" style="border-bottom: 5px solid #da291c;">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Bienvenido a Pix3D</h1>
+            <p class="lead">Personalización épica para tus espacios.</p>
+        </div>
+    </div>
 
-                            <div class="card-body">
-                                h5 class="card-title">{{ p.nombre }}</h5>
-                                <p class="text-success fw-bold">${{ p.precio_base }}</p>
-                                <p>{{ p.descripcion }}</p>
-                                <button class="btn btn-primary w-100">Ver mas</button>
-                            </div>
-                        </div>
+    <div class="container mb-5">
+        <h2 class="fw-bold mb-4">Destacados de la semana</h2>
+
+        <div class="row">
+            {% for p in productos %}
+            <div class="col-md-3 mb-4"> 
+                
+                <div class="card card-producto h-100 p-3">
+                    
+                    <div style="height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                        {% if p.imagen_1 %}
+                            <img src="{{ p.imagen_1.url }}" class="img-fluid" style="max-height: 100%; object-fit: contain;">
+                        {% else %}
+                            <div class="text-muted">Sin imagen</div>
+                        {% endif %}
                     </div>
-                    {% empty %}
-                        <p class="text-center">No hay productos disponibles en este momento.</p>
-                    {% endfor %}
+
+                    <div class="card-body px-0">
+                        <p class="text-uppercase text-muted small fw-bold mb-1">{{ p.categoria }}</p>
+                        
+                        <h6 class="card-title fw-bold text-truncate">{{ p.nombre }}</h6>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="precio">${{ p.precio_base }}</span>
+                        </div>
+                        
+                        <a href="#" class="btn btn-gamestop w-100 mt-3">Ver Detalle</a>
+                    </div>
                 </div>
+
             </div>
+            {% empty %}
+                <div class="col-12 text-center py-5">
+                    <h3 class="text-muted">Aún no hay stock disponible.</h3>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
