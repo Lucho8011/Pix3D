@@ -1,6 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Producto, Pedido
+from .models import Producto, Pedido, Categoria
 from .forms import PedidoForm
+
+def index(request):
+    productos = Producto.objects.all()
+    categorias = Categoria.objects.all()
+
+    busqueda = request.GET.get('buscar')
+    if busqueda:
+        productos = productos.filter(nombre__icontains=busqueda)
+    if categorias:
+        categoria_id = request.GET.get('categoria')
+        if categoria_id:
+            productos = productos.filter(categoria_id=categoria_id)
+    data = {
+        'productos': productos,
+        'categorias': categorias,
+    }
+    return render(request, 'home.html', data)
 
 def index(request):
     lista_productos = Producto.objects.all()

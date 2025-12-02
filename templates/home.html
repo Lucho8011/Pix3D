@@ -13,8 +13,7 @@
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="{% static 'images/Logo.jpg' %}" alt="Pix3D" height="100" class="d-inline-block align-text-center me-2">
-                Pix3D
+                <img src="{% static 'images/logo3.jpg' %}" alt="Pix3D" height="50" class="me-7">
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -22,6 +21,10 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
+                <form class="d-flex mx-auto my-2 my-lg-0 w-50" method="GET">
+                    <input class="form-control me-2" type="search" name="buscar" placeholder="Buscar productos" style="background-color: #f8f9fa; border: 1px solid #eee;">
+                </form>
+
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Categorías</a></li>
@@ -31,53 +34,49 @@
         </div>
     </nav>
 
-    <div class="container-fluid bg-light py-5 mb-5 text-center" style="border-bottom: 5px solid #da291c;">
+    <div class="container-fluid bg-banner py-5 mb-5 text-center">
         <div class="container">
-            <h1 class="display-4 fw-bold">Bienvenido a Pix3D</h1>
-            <p class="lead">Personalización épica para tus espacios.</p>
+            <h1 class="display-5 fw-bold text-dark">Bienvenido a Pix3D</h1>
+            <p class="text-muted">Personalización épica. Diseño simple.</p>
         </div>
     </div>
 
     <div class="container mb-5">
-        <h2 class="fw-bold mb-4">Destacados de la semana</h2>
+        <h3 class="fw-bold mb-4 pb-2 border-bottom">Destacados</h3>
 
         <div class="row">
             {% for p in productos %}
-            <div class="col-md-3 mb-4"> 
-                
+            <div class="col-md-3 mb-4">
                 <div class="card card-producto h-100 p-3">
                     
                     <div style="height: 200px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                         {% if p.imagen_1 %}
                             <img src="{{ p.imagen_1.url }}" class="img-fluid" style="max-height: 100%; object-fit: contain;">
                         {% else %}
-                            <div class="text-muted">Sin imagen</div>
+                            <div class="text-muted small">Sin imagen</div>
                         {% endif %}
                     </div>
 
-                    <div class="card-body px-0">
-                        <p class="text-uppercase text-muted small fw-bold mb-1">{{ p.categoria }}</p>
+                    <div class="card-body px-0 pt-3">
+                        <p class="text-uppercase text-muted small fw-bold mb-1" style="font-size: 0.7rem;">{{ p.categoria }}</p>
+                        <h6 class="card-title fw-bold text-truncate mb-2">{{ p.nombre }}</h6>
                         
-                        <h6 class="card-title fw-bold text-truncate">{{ p.nombre }}</h6>
-                        
-                        <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="d-flex justify-content-between align-items-end">
                             <span class="precio">${{ p.precio_base }}</span>
                         </div>
                         
-                        <a href="{% url 'pedido' p.id %}" class="btn btn-gamestop w-100 mt-3">Solicitar Ahora</a>
+                        <a href="{% url 'pedido' p.id %}" class="btn btn-black w-100 mt-3">Solicitar</a>
                     </div>
                 </div>
-
             </div>
             {% empty %}
                 <div class="col-12 text-center py-5">
-                    <h3 class="text-muted">Aún no hay stock disponible.</h3>
+                    <p class="text-muted">No hay productos disponibles.</p>
                 </div>
             {% endfor %}
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

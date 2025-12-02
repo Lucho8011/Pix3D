@@ -1,5 +1,6 @@
 from django.db import models
 import uuid #generacion de token unico
+from django.core.exceptions import ValidationError
 
 #Para organizacion de productos
 class Categoria(models.Model):
@@ -80,3 +81,11 @@ class Pedido(models.Model):
 
     def __str__(self):
         return f"Pedido {self.id} - {self.nombre_cliente}"
+    
+    def clean(self):
+        if self.estado == 'FIN' and self.estado_pago != 'PAG':
+            raise ValidationError("Error de negocio: Un pedido finalizado debe estar completamente pagado.")
+        
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
