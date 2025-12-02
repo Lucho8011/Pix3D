@@ -27,7 +27,25 @@
 
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Categorías</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categorías
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="navbarDropdown">
+                            {% for c in categorias %}
+                                <li>
+                                    <a class="dropdown-item" href="/?categoria={{ c.id_categoria }}">
+                                        {{ c.nombre_categoria }}
+                                    </a>
+                                </li>
+                            {% empty %}
+                                <li><span class="dropdown-item text-muted">Sin categorías</span></li>
+                            {% endfor %}
+                            
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item fw-bold" href="/">Ver Todo</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="/admin">Admin</a></li>
                 </ul>
             </div>
@@ -37,7 +55,7 @@
     <div class="container-fluid bg-banner py-5 mb-5 text-center">
         <div class="container">
             <h1 class="display-5 fw-bold text-dark">Bienvenido a Pix3D</h1>
-            <p class="text-muted">Personalización épica. Diseño simple.</p>
+            <p class="text-muted">La tienda donde tu imaginacion es la protagonista</p>
         </div>
     </div>
 
@@ -65,7 +83,7 @@
                             <span class="precio">${{ p.precio_base }}</span>
                         </div>
                         
-                        <a href="{% url 'pedido' p.id %}" class="btn btn-black w-100 mt-3">Solicitar</a>
+                        <a href="{% url 'detalle' p.id %}" class="btn btn-black w-100 mt-3">Ver Detalle</a>
                     </div>
                 </div>
             </div>

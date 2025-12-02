@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('pedido/<int:pk>/', views.realizar_pedido, name='pedido'),
     path('seguimiento/<uuid:token>/', views.seguimiento, name='seguimiento'),
+    path('producto/<int:pk>/', views.detalle, name='detalle'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
