@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Producto, Pedido, Categoria
 from .forms import PedidoForm
+from .serializers import InsumoSerializer
+from .models import Insumo
+from rest_framework import viewsets
 
 #vita de la portada
 def index(request):
@@ -49,3 +52,7 @@ def seguimiento(request, token):
 def detalle(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     return render(request, 'detalle.html', {'producto': producto})
+
+class InsumoViewSet(viewsets.ModelViewSet):
+    queryset = Insumo.objects.all()
+    serializer_class = InsumoSerializer
