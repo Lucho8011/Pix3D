@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Pix3D</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="fw-bold">📊 Graficos de Ventas</h1>
+            <a href="/" class="btn btn-outline-dark">Volver a la Tienda</a>
+        </div>
+
+        <div class="card p-4 mb-4 shadow-sm">
+            <h5 class="mb-3">Filtrar por Fecha</h5>
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label>Desde:</label>
+                    <input type="date" name="fecha_inicio" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label>Hasta:</label>
+                    <input type="date" name="fecha_fin" class="form-control" required>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Aplicar Filtro</button>
+                    <a href="{% url 'reporte' %}" class="btn btn-link ms-2">Limpiar</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white fw-bold">Pedidos por Estado</div>
+                    <div class="card-body">
+                        <canvas id="graficoEstados"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white fw-bold">Origen de Pedidos (Plataforma)</div>
+                    <div class="card-body">
+                        <canvas id="graficoPlataforma"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-white fw-bold">Detalle de Pedidos Filtrados</div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in pedidos %}
+                        <tr>
+                            <td>#{{ p.id }}</td>
+                            <td>{{ p.nombre_cliente }}</td>
+                            <td><span class="badge bg-secondary">{{ p.estado }}</span></td>
+                            <td>{{ p.fecha_solicitud|date:"d/m/Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center">No hay datos.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {{ labels_estados|json_script:"data-labels-estados" }}
+    {{ counts_estados|json_script:"data-counts-estados" }}
+    {{ labels_plat|json_script:"data-labels-plat" }}
+    {{ counts_plat|json_script:"data-counts-plat" }}
+
+    <script>
+        const labelsEstados = JSON.parse(document.getElementById('data-labels-estados').textContent);
+        const countsEstados = JSON.parse(document.getElementById('data-counts-estados').textContent);
+        
+        const labelsPlat = JSON.parse(document.getElementById('data-labels-plat').textContent);
+        const countsPlat = JSON.parse(document.getElementById('data-counts-plat').textContent);
+
+        
+        // GRÁFICO 1: ESTADOS
+        const ctxEstado = document.getElementById('graficoEstados').getContext('2d');
+        new Chart(ctxEstado, {
+            type: 'doughnut',
+            data: {
+                labels: labelsEstados,
+                datasets: [{
+                    data: countsEstados,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                }]
+            }
+        });
+
+        // GRÁFICO 2: PLATAFORMA
+        const ctxPlat = document.getElementById('graficoPlataforma').getContext('2d');
+        new Chart(ctxPlat, {
+            type: 'bar',
+            data: {
+                labels: labelsPlat,
+                datasets: [{
+                    label: 'Cantidad de Pedidos',
+                    data: countsPlat,
+                    backgroundColor: '#36A2EB'
+                }]
+            },
+            options: {
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -4,10 +4,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from mainApp import views
 from rest_framework.routers import DefaultRouter
-from mainApp.views import InsumoViewSet
+from mainApp.views import InsumoViewSet, PedidoViewSet, PedidoFilterView, reporte_pedidos
 
 router = DefaultRouter()
 router.register(r'insumos', InsumoViewSet)
+router.register(r'pedidos', PedidoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,7 +16,10 @@ urlpatterns = [
     path('pedido/<int:pk>/', views.realizar_pedido, name='pedido'),
     path('seguimiento/<uuid:token>/', views.seguimiento, name='seguimiento'),
     path('producto/<int:pk>/', views.detalle, name='detalle'),
+    path('reporte/', reporte_pedidos, name='reporte'),
     path('api/', include(router.urls)),
+    path('api/pedidos/filtrar/', PedidoFilterView.as_view(), name='api_filtrar'),
+    
 ]
 
 

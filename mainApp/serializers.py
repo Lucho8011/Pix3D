@@ -5,3 +5,8 @@ class InsumoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Insumo
         fields = '__all__'
+
+class PedidoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pedido
+        fields = '__all__'
