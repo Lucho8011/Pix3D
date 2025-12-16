@@ -1,71 +1,77 @@
-# 🛒 Tienda Pix3D - Sistema de Pedidos Personalizados
+# 🛒 Tienda Pix3D - Sistema de Pedidos & API REST
 
-Bienvenido al repositorio oficial de **Pix3D**, una plataforma web para la gestión de pedidos de productos personalizados (poleras, tazones y figuras 3D).
+**Despliegue en Nube y Arquitectura de Servicios**
 
-Este proyecto permite a los clientes explorar un catálogo, solicitar productos personalizados y realizar seguimiento, mientras que los administradores gestionan el ciclo de vida completo del pedido.
+Bienvenido al repositorio de **Pix3D**, una plataforma web desplegada en la nube para la gestión de pedidos personalizados. Este proyecto evoluciona la versión anterior integrando **Base de Datos PostgreSQL**, **APIs RESTful** y un **Dashboard del Negocio**.
 
+## 🚀 Enlaces del Proyecto (Deploy)
+* 🌐 **Sitio Web (Render):** [https://tienda-pix3d-eval4.onrender.com/](hhttps://tienda-pix3d-eval4.onrender.com/)
 ---
 
-## 🚀 Funcionalidades Principales
+## 🌟 Nuevas Funcionalidades (Versión Cloud)
 
-### 👤 Para el Cliente (Frontend)
-* **Catálogo Visual:** Vista de productos con buscador y filtros por categoría.
-* **Detalle de Producto:** Ficha técnica con descripción ampliada.
-* **Solicitud de Pedidos:** Formulario para ingresar datos y subir imágenes de referencia.
-* **Tracking en Vivo:** Sistema de seguimiento mediante código único (UUID) para ver el estado del pedido.
+### 📊 Business Intelligence (Dashboard)
+* **Reportes Gráficos:** Implementación de **Chart.js** para visualizar el estado de pedidos y métricas de ventas en tiempo real (`/reporte/`).
+* **Datos Dinámicos:** Los gráficos se alimentan directamente de la base de datos PostgreSQL.
 
-### 👮‍♂️ Para el Administrador (Backend)
-* **Gestión de Inventario:** Control de productos e insumos.
-* **Validaciones de Negocio:** Reglas estrictas para cambios de estado (Ej: No finalizar sin pago).
-* **Reportes:** Exportación de pedidos a formato Excel (CSV).
-* **Panel Intuitivo:** Filtros avanzados y búsqueda rápida.
+### 🔌 API REST (Django REST Framework)
+El sistema expone endpoints para integración con otros sistemas:
+1.  **Insumos (CRUD Completo):** `/api/insumos/`
+2.  **Pedidos (Seguridad):** `/api/pedidos/` 
+3.  **Filtros Avanzados:** `/api/pedidos/filtrar/?estado=SOL` 
+
+### ☁️ Infraestructura Cloud (Render)
+* **Base de Datos Híbrida:** SQLite para desarrollo local y **PostgreSQL** para producción.
+* **Archivos Estáticos:** Gestión optimizada con **WhiteNoise**.
+* **Automatización:** Script `build.sh` y creación automática de superusuario.
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **Backend:** Python 3.12 + Django 5.2.5
-* **Frontend:** HTML5, CSS3, Bootstrap 5.3.0
-* **Base de Datos:** SQLite
-* **Gestión de Archivos:** Pillow
+* **Backend:** Python 3.12, Django 5.2, **Django REST Framework**.
+* **Frontend:** HTML5, Bootstrap 5, **Chart.js**.
+* **Servidor:** Gunicorn + WhiteNoise.
+* **Base de Datos:**
+    * 🔴 Local: SQLite
+    * 🟢 Producción: **PostgreSQL** (Render).
+* **Despliegue:** Render.com
 
 ---
 
-## 📋 Guía de Instalación y Ejecución
+## 📋 Guía de Instalación Local 
 
-Sigue estos pasos para levantar el proyecto en tu entorno local:
+Si deseas correr este proyecto en tu máquina local (Windows/Mac) en lugar de ver la versión nube:
 
 ### 1. Clonar el repositorio
 ```bash
 git clone [https://github.com/Lucho8011/Pix3D.git](https://github.com/Lucho8011/Pix3D.git)
 cd Pix3D
 ```
-
 ### 2. Crear y activar el entorno virtual
-
 -En macOS / Linux:
 ```bash
 python3 -m venv env
 source env/bin/activate
 ```
 -En Windows:
-```bash
+```Bash
 python -m venv env
 env\Scripts\activate
 ```
-
 ### 3. Instalar dependencias
 ```bash
 pip install -r requirements.txt
 ```
 ### 4. Preparar la Base de Datos
-```bash
+```Bash
 python3 manage.py migrate
 ```
 ### 5. Crear un Superusuario
-```bash
+```Bash
 python3 manage.py createsuperuser
 ```
 ### 6. Iniciar el Servidor
-```bash
+```Bash
 python3 manage.py runserver
+```
