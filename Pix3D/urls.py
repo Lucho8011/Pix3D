@@ -17,9 +17,8 @@ urlpatterns = [
     path('seguimiento/<uuid:token>/', views.seguimiento, name='seguimiento'),
     path('producto/<int:pk>/', views.detalle, name='detalle'),
     path('reporte/', reporte_pedidos, name='reporte'),
-    path('api/', include(router.urls)),
     path('api/pedidos/filtrar/', PedidoFilterView.as_view(), name='api_filtrar'),
-    
+    path('api/', include(router.urls)),
 ]
 
 
