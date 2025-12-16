@@ -85,7 +85,7 @@
     {{ labels_estados|json_script:"data-labels-estados" }}
     {{ counts_estados|json_script:"data-counts-estados" }}
     {{ labels_plat|json_script:"data-labels-plat" }}
-    {{ counts_plat|json_script:"data-counts-plat" }}
+    {{ counts|json_script:"data-counts-plat" }}
 
     <script>
         const labelsEstados = JSON.parse(document.getElementById('data-labels-estados').textContent);
